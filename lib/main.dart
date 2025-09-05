@@ -1,4 +1,3 @@
-import 'package:eventmanagement/acceptrejectfinal.dart';
 import 'package:eventmanagement/authentication/firebase_options.dart';
 
 import 'package:eventmanagement/screens/eventcreation2.dart';
@@ -6,7 +5,9 @@ import 'package:eventmanagement/screens/eventdetails.dart';
 import 'package:eventmanagement/screens/eventinvite.dart';
 import 'package:eventmanagement/screens/home/eventlist.dart';
 import 'package:eventmanagement/screens/home/landingpage.dart';
+import 'package:eventmanagement/screens/profile/profiledetails.dart';
 import 'package:eventmanagement/screens/profile/profilepage.dart';
+import 'package:eventmanagement/screens/profile/profilepicture.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,18 +21,11 @@ void main() async {
 }
 
 final _router = GoRouter(
-  initialLocation: '/eventlist',
+  initialLocation: '/login',
   routes: [
     /// Login & Signup routes
     GoRoute(path: '/login', builder: (context, state) => const Logina()),
     GoRoute(path: '/signup', builder: (context, state) => const Signupa()),
-
-    GoRoute(
-      path: '/acceptrejectfinal',
-      builder: (context, state) {
-        return Acceptrejectfinal();
-      },
-    ),
 
     /// Shell route for bottom navigation
     StatefulShellRoute.indexedStack(
@@ -83,22 +77,32 @@ final _router = GoRouter(
           ],
         ),
 
-        // / Profile tab
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: '/settings',
-              builder: (context, state) => const ProfilePage(),
-            ),
-          ],
-        ),
+        // / Settings tab
+        // StatefulShellBranch(
+        //   routes: [
+        //     GoRoute(
+        //       path: '/settings',
+        //       builder: (context, state) => const ProfilePage(),
+        //     ),
+        //   ],
+        // ),
 
         /// Settings tab
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: '/profile',
+              path: '/profilepage',
               builder: (context, state) => const ProfilePage(),
+              routes: [
+                GoRoute(
+                  path: '/profiledetails',
+                  builder: (context, state) => const HomeProfileDetails(),
+                ),
+                GoRoute(
+                  path: '/profilepicture',
+                  builder: (context, state) => const Profilepicture(userId: '',),
+                ),
+              ],
             ),
           ],
         ),
