@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.example.eventmanagement",
+    "sha256_cert_fingerprints":
+    ["14:7F:7E:56:3C:CB:BF:C5:14:12:D9:9D:AB:05:AB:C1:5F:C8:49:D8:17:1B:9E:F4:03:AF:B8:5A:F6:A4:4F:91"]
+  }
+}]
