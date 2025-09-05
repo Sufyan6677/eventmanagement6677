@@ -3,6 +3,8 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:eventmanagement/database/databaseservice2.dart';
+import 'package:eventmanagement/screens/profile/profilepicture.dart';
 import 'package:eventmanagement/widgets/textwidgets.dart';
 import 'package:eventmanagement/widgets/user_infowidget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,6 +26,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   File? image;
   final ImagePicker _picker = ImagePicker();
+  final _dbservice=Databaseservice();
 
   Future<void> _pickImage(ImageSource source) async {
     try {
@@ -85,14 +88,31 @@ class _ProfilePageState extends State<ProfilePage> {
           ElevatedButton(
             onPressed: () {
               log('reached this point');
-              context.push('/homeprofile/profilepicture');
+              context.push('/profilepage/profilepicture');
             },
             child: GoogleText('View Picture', color: Colors.black),
           ), // space below avatar
           ElevatedButton(
-            onPressed: () {
-              _pickImage(ImageSource.gallery);
-            },
+            onPressed: () async {
+    // Step 1: pick image
+    await _pickImage(ImageSource.gallery);
+
+    if (image != null) {
+      // Step 2: get current userId
+      final uid = FirebaseAuth.instance.currentUser!.uid;
+
+      // Step 3: upload picture
+      final profilePic = Profilepicture(userId: uid, imageFile: image);
+
+      String url = await profilePic.uploadProfilePicture(image!);
+
+      if (url.isNotEmpty) {
+        await profilePic.saveProfilePictureUrl(url);
+        print("✅ Profile picture uploaded: $url");
+      }
+    } else {
+      print("❌ No image selected");
+    }},
             child: GoogleText('Edit'),
           ),
           GoogleText(
@@ -176,34 +196,35 @@ class _ProfilePageState extends State<ProfilePage> {
 
                 // Logout Option
                 ListTile(
-  leading: const Icon(Icons.logout),
-  title: const GoogleText("Log out"),
-  onTap: () async {
-    try {
-      await GoogleSignIn().signOut();
-      await FirebaseAuth.instance.signOut();
+                  leading: const Icon(Icons.logout),
+                  title: const GoogleText("Log out"),
+                  onTap: () async {
+                    try {
+                      await GoogleSignIn().signOut();
+                      await FirebaseAuth.instance.signOut();
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: GoogleText("Logout Successful 🎉"),
-          backgroundColor: Colors.green,
-        ),
-      );
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: GoogleText("Logout Successful 🎉"),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
 
-      context.go('/login'); // better to use go instead of push for login
-    } catch (e) {
-      print("Logout error: $e"); // Debugging
+                      context.go(
+                        '/login',
+                      ); // better to use go instead of push for login
+                    } catch (e) {
+                      print("Logout error: $e"); // Debugging
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: GoogleText("Logout failed ❌"),
-          backgroundColor: Colors.red,
-        ),
-      );
-    }
-  },
-),
-
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: GoogleText("Logout failed ❌"),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
+                  },
+                ),
               ],
             ),
           ),

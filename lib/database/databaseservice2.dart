@@ -1,11 +1,14 @@
 import 'dart:developer';
+import 'dart:io';
 import 'package:eventmanagement/screens/profile/profiledetails.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import '../authentication/auth_service2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Databaseservice {
   final _firedb = FirebaseFirestore.instance;
+  final _storage = FirebaseStorage.instance;
 
   Future<String> createEvent(EventModel event) async {
     try {
@@ -44,4 +47,27 @@ class Databaseservice {
       log('Something is wrong ');
     }
   }
+  Future<String?> uploadUserProfilePicture(String userId, File imageFile) async {
+    try {
+      // Storage reference: profile_pictures/userId.jpg
+      final ref = _storage.ref().child("profile_pictures/$userId.jpg");
+
+      // Upload file
+      await ref.putFile(imageFile);
+
+      // Get download URL
+      String downloadUrl = await ref.getDownloadURL();
+
+      // Save in Firestore (users collection, document = userId)
+      await _firedb.collection("users").doc(userId).set({
+        "profilePictureUrl": downloadUrl,
+      }, SetOptions(merge: true));
+
+      return downloadUrl;
+    } catch (e) {
+      log("Error uploading profile picture: $e");
+      return null;
+    }
+  }
+
 }
