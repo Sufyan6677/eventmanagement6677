@@ -53,18 +53,36 @@ class _EventInviteState extends State<EventInvite> {
       );
     }
   }
-@override
-void initState() {
-  super.initState();
-  log("Event ID: ${widget.eventId}");
-}
 
-
+  @override
+  void initState() {
+    super.initState();
+    log("Event ID: ${widget.eventId}");
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () {
+              context.pop(); // GoRouter back navigation
+              // If not using GoRouter, use: Navigator.pop(context);
+            },
+          ),
+          centerTitle: true,
+          title: GoogleText(
+            "Chats",
+
+            color: Colors.black,
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -78,7 +96,7 @@ void initState() {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              
+
               SizedBox(height: 16),
               TextField(
                 controller: _emailsController,
@@ -134,15 +152,13 @@ void initState() {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        
               ),
               ElevatedButton(
-  onPressed: () {
-    context.push('/acceptreject', extra: 'ZiRQaQUFI6mhxIGFgvHK');
-  },
-  child: Text('Test  Page'),
-)
-
+                onPressed: () {
+                  context.push('/acceptreject', extra: 'ZiRQaQUFI6mhxIGFgvHK');
+                },
+                child: GoogleText('Test  Page'),
+              ),
             ],
           ),
         ),

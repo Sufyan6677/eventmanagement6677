@@ -1,5 +1,7 @@
 // import 'dart:math';
 
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
 import 'dart:io';
 
@@ -42,7 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    
     super.initState();
     fetchUserData();
   }
@@ -50,7 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromARGB(255, 118, 145, 235),
       body: Column(
         children: [
           // Top Section with Stack
@@ -87,18 +89,26 @@ class _ProfilePageState extends State<ProfilePage> {
               log('reached this point');
               context.push('/homeprofile/profilepicture');
             },
-            child: GoogleText('View Picture', color: Colors.black),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color.fromARGB(255, 126, 199, 235),
+              
+            ),
+            child: GoogleText('View Picture', color: Colors.white,fontWeight: FontWeight.w600,),
           ), // space below avatar
           ElevatedButton(
             onPressed: () {
               _pickImage(ImageSource.gallery);
             },
-            child: GoogleText('Edit'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color.fromARGB(255, 126, 199, 235),
+            ),
+            child: GoogleText('Edit',color: Colors.white,fontWeight: FontWeight.w600,),
           ),
           GoogleText(
             userEmail.isNotEmpty ? userName : "Loading...",
             fontSize: 30,
             fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
           const SizedBox(height: 5),
           Padding(
@@ -126,12 +136,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const GoogleText("Mail", color: Colors.grey, fontSize: 16),
+                    const GoogleText("Mail", color: Colors.white, fontSize: 18,fontWeight: FontWeight.bold,),
                     const SizedBox(width: 10),
                     GoogleText(
                       userEmail.isNotEmpty ? userEmail : "Loading...",
                       fontSize: 16,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
                     ),
                   ],
                 ),
@@ -146,8 +157,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
                 // Profile Details Option
                 ListTile(
-                  leading: const Icon(Icons.person_outline),
-                  title: const GoogleText("Profile details"),
+                  leading: const Icon(Icons.person_outline,color: Colors.white,),
+                  title: const GoogleText("Profile details",fontWeight: FontWeight.w600,color: Colors.white,),
                   onTap: () {
                     try {
                       context.push('/profilepage/profiledetails');
@@ -166,8 +177,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
                 // Settings Option
                 ListTile(
-                  leading: const Icon(Icons.settings_outlined),
-                  title: const GoogleText("Settings"),
+                  leading: const Icon(Icons.settings_outlined,color: Colors.white,),
+                  title: const GoogleText("Settings",color: Colors.white,fontWeight: FontWeight.w600,),
                   onTap: () {
                     // Navigate to settings page
                   },
@@ -176,8 +187,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
                 // Logout Option
                 ListTile(
-  leading: const Icon(Icons.logout),
-  title: const GoogleText("Log out"),
+  leading: const Icon(Icons.logout,color: Colors.white,),
+  title: const GoogleText("Log out",color: Colors.white,fontWeight: FontWeight.w600,),
   onTap: () async {
     try {
       await GoogleSignIn().signOut();

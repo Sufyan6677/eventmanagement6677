@@ -29,7 +29,7 @@ class EventCard extends StatelessWidget {
 
         margin: const EdgeInsets.only(right: 16, top: 12, bottom: 12),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: const Color.fromARGB(255, 181, 195, 240),
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
@@ -52,7 +52,7 @@ class EventCard extends StatelessWidget {
                   ),
                   child: Image.network(
                     "https://picsum.photos/seed/${DateTime.now().millisecondsSinceEpoch}/400/200",
-                    height: 140,
+                    height: 150,
                     width: double.infinity,
                     fit: BoxFit.cover,
                     loadingBuilder: (context, child, progress) {
@@ -95,8 +95,9 @@ class EventCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(height: 8),
                   GoogleText(title, fontSize: 20, fontWeight: FontWeight.bold),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 8),
                   Row(
                     children: [
                       const Icon(
@@ -114,16 +115,12 @@ class EventCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 8),
                   Row(
                     children: [
                       GoogleText('$attendeescount attending'),
                       SizedBox(width: 45),
-                      GoogleText(
-                        "Join",
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                      
                     ],
                   ),
                 ],

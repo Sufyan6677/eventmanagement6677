@@ -33,7 +33,7 @@ class _LoginaState extends State<Logina> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromARGB(255, 118, 145, 235),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -56,7 +56,7 @@ class _LoginaState extends State<Logina> {
                 const SizedBox(height: 10),
                 const Text(
                   "Enter your login information",
-                  style: TextStyle(fontSize: 16, color: Colors.grey),
+                  style: TextStyle(fontSize: 18, color: Colors.grey),
                 ),
 
                 const SizedBox(height: 10),

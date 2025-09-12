@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
@@ -149,6 +151,7 @@ class EventModel {
   final String title;
   final String description;
   final DateTime dateTime;
+  final String category;
   final String createdBy;
   final String? attendees;
   final String eventlocation;
@@ -157,6 +160,7 @@ class EventModel {
     this.attendees,
     required this.title,
     required this.description,
+    required this.category,
     required this.eventlocation,
     required this.dateTime,
     required this.createdBy,

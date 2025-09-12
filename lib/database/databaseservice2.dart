@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:eventmanagement/screens/profile/profiledetails.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import '../authentication/auth_service2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,7 +19,7 @@ class Databaseservice {
       DocumentReference ref = await _firedb.collection("events").add({
         "eventname": event.title,
         "description": event.description,
-        // "category": user.category,
+        "category": event.category,
         "Date&Time": event.dateTime,
         // "end-date": user.enddate,
         "Created By": event.createdBy,
@@ -27,7 +28,7 @@ class Databaseservice {
         // "organizer":{"organizername": user.organizername,
         // "emailcontact": user.emailcontact,
         // "phonecontact": user.phonecontact},
-        "attendees": attendeesList,
+        "attendees": attendeesList ,
       });
       return ref.id;
     } catch (e) {
@@ -44,4 +45,29 @@ class Databaseservice {
       log('Something is wrong ');
     }
   }
+    // ====================== FCM TOKEN =======================
+  Future<void> saveFcmToken(String uid) async {
+    try {
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
+      if (fcmToken != null) {
+        await _firedb.collection("users").doc(uid).set({
+          'fcmToken': fcmToken,
+        }, SetOptions(merge: true));
+        log('FCM Token saved for user $uid: $fcmToken');
+      }
+    } catch (e) {
+      log('Error saving FCM token: $e');
+    }
+  }
+
+  Future<String?> getFcmToken(String uid) async {
+    try {
+      DocumentSnapshot doc = await _firedb.collection("users").doc(uid).get();
+      return doc.get('fcmToken');
+    } catch (e) {
+      log('Error fetching FCM token for $uid: $e');
+    }
+    return null;
+  }
 }
+

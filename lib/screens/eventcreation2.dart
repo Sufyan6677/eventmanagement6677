@@ -20,7 +20,16 @@ class EventCreationPage extends StatefulWidget {
 class _EventCreationPageState extends State<EventCreationPage> {
   final _dbservice = Databaseservice();
   final _authservice = AuthService();
-  
+  final List<String> categories = [
+    "Music",
+    "Sports",
+    "Education",
+    "Business",
+    "Technology",
+  ];
+
+  String? selectedCategory;
+
   DateTime? _selectedDate;
   TimeOfDay? _selectedTime;
   final _title = TextEditingController();
@@ -84,17 +93,20 @@ class _EventCreationPageState extends State<EventCreationPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color.fromARGB(255, 118, 145, 235),
         // appBar: AppBar(title: const Text("Create Event"), centerTitle: true),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GoogleText(
-                "Create Event",
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
+              Center(
+                child: GoogleText(
+                  "Create Event",
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
               const SizedBox(height: 20),
 
@@ -103,6 +115,7 @@ class _EventCreationPageState extends State<EventCreationPage> {
                 controller: _title,
                 title: "Event Name",
                 hint: "Enter event name",
+                
               ),
               _labeledField(
                 controller: _description,
@@ -110,23 +123,38 @@ class _EventCreationPageState extends State<EventCreationPage> {
                 hint: "Write a short description",
                 maxLines: 3,
               ),
-              TextButton(onPressed: _pickDate, child: GoogleText('Pick Date')),
-              TextButton(onPressed: _pickTime, child: GoogleText('Pick Time')),
-              // _labeledField(
-              //   controller: _category,
-              //   title: "Category",
-              //   hint: "e.g. Workshop, Sports, Study",
-              // ),
-              // _labeledField(
-              //   controller: _startdate,
-              //   title: "Start Date",
-              //   hint: "YYYY-MM-DD",
-              // ),
-              // _labeledField(
-              //   controller: _enddate,
-              //   title: "End Date",
-              //   hint: "YYYY-MM-DD",
-              // ),
+              TextButton(onPressed: _pickDate, child: GoogleText('Pick Date',color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold)),
+              TextButton(onPressed: _pickTime, child: GoogleText('Pick Time',color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold)),
+              GoogleText('Category', fontSize: 20,color: Colors.white, fontWeight: FontWeight.bold),
+              DropdownButtonFormField<String>(
+                value: selectedCategory,
+                hint: const GoogleText("Select Category",color: Colors.white60,),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: const BorderSide(
+                      color: Colors.amber,
+                      width: 2.5,
+                    ),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 12,
+                  ),
+                ),
+                items:
+                    categories.map((cat) {
+                      return DropdownMenuItem(value: cat, child: Text(cat));
+                    }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    selectedCategory = value;
+                  });
+                },
+              ),
               // _labeledField(
               //   controller: _starttime,
               //   title: "Start Time",
@@ -179,12 +207,15 @@ class _EventCreationPageState extends State<EventCreationPage> {
                       title: _title.text,
                       description: _description.text,
                       dateTime: eventDateTime,
+                      category: selectedCategory ?? "Uncategorized",
+
                       createdBy: FirebaseAuth.instance.currentUser!.uid,
                       eventlocation: _eventlocation.text,
+                      attendees: '',
                     );
 
                     try {
-                      final docId=await _dbservice.createEvent(event);
+                      final docId = await _dbservice.createEvent(event);
 
                       await _authservice.addEventToGoogleCalendar(
                         title: event.title,
@@ -200,17 +231,18 @@ class _EventCreationPageState extends State<EventCreationPage> {
                           backgroundColor: Colors.green,
                         ),
                       );
-                      
+
                       await MeetService(docId);
 
-    // ✅ Success Snackbar
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: GoogleText("Event created with Meet link 🎉"),
-        backgroundColor: Colors.green,
-      ),
-    );
-
+                      // ✅ Success Snackbar
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: GoogleText(
+                            "Event created with Meet link 🎉",
+                          ),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
 
                       // small delay so user sees snackbar before navigating
                       await Future.delayed(const Duration(seconds: 1));
@@ -244,7 +276,6 @@ class _EventCreationPageState extends State<EventCreationPage> {
                   ),
                 ),
               ),
-              
             ],
           ),
         ),
@@ -259,13 +290,14 @@ class _EventCreationPageState extends State<EventCreationPage> {
     String? hint,
     int maxLines = 1,
     TextEditingController? controller,
+    
 
     TextInputType keyboardType = TextInputType.text,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        GoogleText(title, fontSize: 14, fontWeight: FontWeight.w800),
+        GoogleText(title, color: Colors.white,fontSize: 20, fontWeight: FontWeight.w800),
         const SizedBox(height: 8),
         TextField(
           controller: controller,
@@ -274,9 +306,9 @@ class _EventCreationPageState extends State<EventCreationPage> {
           decoration: InputDecoration(
             hintText: hint ?? '',
             hintStyle: GoogleFonts.montserrat(
-              fontSize: 14,
+              fontSize: 16,
               fontWeight: FontWeight.w400,
-              color: const Color.fromARGB(255, 95, 94, 94),
+              color: const Color.fromARGB(255, 227, 222, 222),
             ),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 12,
@@ -286,7 +318,7 @@ class _EventCreationPageState extends State<EventCreationPage> {
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
 
-              borderSide: BorderSide(color: Colors.black),
+              borderSide: BorderSide(color: Colors.white),
             ),
 
             // Border when FOCUSED

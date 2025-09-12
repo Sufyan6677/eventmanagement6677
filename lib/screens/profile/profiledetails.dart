@@ -2,6 +2,7 @@
 import 'package:eventmanagement/widgets/textwidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:eventmanagement/database/databaseservice2.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeProfileDetails extends StatefulWidget {
   const HomeProfileDetails({super.key});
@@ -28,7 +29,27 @@ class _HomeProfileDetails extends State<HomeProfileDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromARGB(255, 118, 145, 235),
+      appBar: AppBar(
+    backgroundColor: Colors.white,
+    elevation: 0,
+    leading: IconButton(
+      icon: Icon(Icons.arrow_back, color: Colors.black),
+      onPressed: () {
+        context.pop(); // GoRouter back navigation
+        // If not using GoRouter, use: Navigator.pop(context);
+      },
+    ),
+    centerTitle: true,
+    title: GoogleText(
+      "Chats",
+      
+        color: Colors.black,
+        fontSize: 30,
+        fontWeight: FontWeight.bold,
+      
+    ),
+  ),
 
       body: SingleChildScrollView(
         child: Padding(

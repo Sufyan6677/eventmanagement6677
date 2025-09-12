@@ -1,5 +1,5 @@
 // import 'dart:developer';
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, use_build_context_synchronously
 
 import 'package:eventmanagement/authentication/auth_service2.dart';
 import 'package:eventmanagement/widgets/custombutton.dart';
@@ -34,7 +34,7 @@ class _SignupaState extends State<Signupa> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromARGB(255, 118, 145, 235),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -50,13 +50,13 @@ class _SignupaState extends State<Signupa> {
 
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+                  color: Colors.white,
                 ),
 
                 const SizedBox(height: 10),
                 const GoogleText(
                   "Enter your data to create your account",
-                  fontSize: 16,
+                  fontSize: 18,
                   color: Colors.grey,
                 ),
 
@@ -76,7 +76,7 @@ class _SignupaState extends State<Signupa> {
                         : CustomTextButton(
                           textSize: 15,
                           textColor: Colors.white,
-                          backgroundColor: Colors.orange,
+                          backgroundColor: Colors.amber,
                           borderColor: Colors.white,
 
                           text: 'Google',
@@ -100,7 +100,7 @@ class _SignupaState extends State<Signupa> {
                     CustomTextButton(
                       textSize: 15,
                       textColor: Colors.white,
-                      backgroundColor: Colors.orange,
+                      backgroundColor: Colors.amber,
                       borderColor: Colors.white,
                       text: 'Apple',
                       fontWeight: FontWeight.bold,
@@ -203,7 +203,7 @@ class _SignupaState extends State<Signupa> {
                   child: CustomTextButton(
                     textSize: 18,
                     textColor: Colors.white,
-                    backgroundColor: Colors.orange,
+                    backgroundColor: Colors.amber,
                     text: 'Sign-Up',
                     borderRadiusCircular: 12,
                     borderColor: Colors.white,
@@ -252,7 +252,7 @@ class _SignupaState extends State<Signupa> {
                       child: const GoogleText(
                         "Sign In",
 
-                        color: Colors.orange,
+                        color: Colors.amber,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

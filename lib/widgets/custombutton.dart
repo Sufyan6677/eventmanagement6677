@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:eventmanagement/widgets/textwidgets.dart';
 import 'package:flutter/material.dart';
 

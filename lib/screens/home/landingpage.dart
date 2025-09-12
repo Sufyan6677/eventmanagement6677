@@ -1,3 +1,4 @@
+import 'package:eventmanagement/widgets/textwidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -65,25 +66,25 @@ class _LandingPageState extends State<LandingPage> {
             items: [
               SalomonBottomBarItem(
                 icon: const Icon(Icons.home),
-                title: const Text("Home"),
+                title: const GoogleText("Home"),
                 unselectedColor: Colors.amber,
                 selectedColor: Colors.amber,
               ),
               SalomonBottomBarItem(
                 icon: const Icon(Icons.create),
-                title: const Text("Create Event"),
+                title: const GoogleText("Create Event"),
                 unselectedColor: Colors.amber,
                 selectedColor: Colors.amber,
               ),
-              // SalomonBottomBarItem(
-              //   icon: const Icon(Icons.settings),
-              //   title: const Text("Settings"),
-              //   unselectedColor: Colors.amber,
-              //   selectedColor: Colors.amber,
-              // ),
+              SalomonBottomBarItem(
+                icon: const Icon(Icons.chat),
+                title: const GoogleText("Messages"),
+                unselectedColor: Colors.amber,
+                selectedColor: Colors.amber,
+              ),
               SalomonBottomBarItem(
                 icon: const Icon(Icons.person),
-                title: const Text("Profile"),
+                title: const GoogleText("Profile"),
                 unselectedColor: Colors.amber,
                 selectedColor: Colors.amber,
               ),

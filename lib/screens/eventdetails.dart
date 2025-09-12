@@ -25,60 +25,65 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
   // final String currentUsername = FirebaseAuth.instance.currentUser!.uid;
   Map<String, dynamic> get event => widget.eventData ?? {};
   void toggleAttendance(String docId) async {
-  final user = FirebaseAuth.instance.currentUser;
-  if (user == null) return;
-  final email = user.email ?? "unknown email.com";
-  final docRef = FirebaseFirestore.instance.collection('events').doc(docId);
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+    final uid = user.uid ?? "unknown uid";
+    final docRef = FirebaseFirestore.instance.collection('events').doc(docId);
+    // Fetch current event data
+    final docSnap = await docRef.get();
+    final eventData = docSnap.data() as Map<String, dynamic>;
+    // Convert to List<String>
+    List<String> attendees = List<String>.from(eventData['attendees'] ?? []);
+    if (isAttending) {
+      // ✅ Remove user from event attendees
+      attendees.remove(uid);
+      setState(() {
+        isAttending = false;
+        event['attendees'] = attendees;
+      });
+      // ✅ Remove user from the group chat participants
+      final chatRef = FirebaseFirestore.instance
+          .collection('chats')
+          .doc(docId); // use eventId as chatId
+      await chatRef.update({
+        'participants': FieldValue.arrayRemove([uid]),
+      });
+    } else {
+      // ✅ Add user to event attendees
+      attendees.add(uid);
+      setState(() {
+        isAttending = true;
+        event['attendees'] = attendees;
+      });
+      // ✅ Create group chat if it doesn’t exist, else just add participant
+      final chatRef = FirebaseFirestore.instance
+          .collection('chats')
+          .doc(docId); // eventId = chatId
+      final chatSnap = await chatRef.get();
+      if (!chatSnap.exists) {
+        await chatRef.set({
+          'eventId': docId,
+          'eventName': eventData['eventname'] ?? 'Unnamed Event',
+          'participants': [uid],
+          'createdAt': FieldValue.serverTimestamp(),
+        });
+      } else {
+        await chatRef.update({
+          'participants': FieldValue.arrayUnion([uid]),
+        });
+      }
+    }
 
-  // Convert to List<String>
-  List<String> attendees = List<String>.from(event['attendees'] ?? []);
-
-  if (isAttending) {
-    attendees.remove(email);
-    setState(() {
-      isAttending = false;
-      event['attendees'] = attendees;
-    });
-  } else {
-    attendees.add(email);
-    setState(() {
-      isAttending = true;
-      event['attendees'] = attendees;
-    });
+    // ✅ Update event attendees in Firestore
+    await docRef.update({'attendees': attendees});
   }
 
-  await docRef.update({'attendees': attendees});
-}
-
-  // void toggleAttendance(String docId, String username) async {
-  //   setState(() {
-  //     List<String> attendeeList = List<String>.from(event['attendees'] ?? []);
-
-  //     if (isAttending) {
-  //       attendeeList.remove(username);
-  //       isAttending = false;
-  //     } else {
-  //       attendeeList.add(username);
-  //       isAttending = true;
-  //     }
-
-  //     // Update local map
-  //     event['attendees'] = attendeeList;
-  //   });
-
-  //   // Update Firestore
-  //   await FirebaseFirestore.instance.collection('events').doc(docId).update({
-  //     'attendees': event['attendees'],
-  //   });
-  // }
   @override
   void initState() {
-    super.initState();
-   final user = FirebaseAuth.instance.currentUser;
-final email = user?.email ?? "";
-List<String> attendees = List<String>.from(event['attendees'] ?? []);
-isAttending = attendees.contains(email);
-
+    final user = FirebaseAuth.instance.currentUser;
+    final uid = user?.uid ?? "";
+    List<String> attendees = List<String>.from(event['attendees'] ?? []);
+    isAttending = attendees.contains(uid); // ✅ check by UID
   }
 
   @override
@@ -95,7 +100,26 @@ isAttending = attendees.contains(email);
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 255, 255, 251),
+        backgroundColor: const Color.fromARGB(255, 118, 145, 235),
+        appBar: AppBar(
+          
+          elevation: 0,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () {
+              context.pop(); // GoRouter back navigation
+              // If not using GoRouter, use: Navigator.pop(context);
+            },
+          ),
+          centerTitle: true,
+          title: GoogleText(
+            "Details",
+
+            color: Colors.black,
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
 
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
@@ -128,7 +152,7 @@ isAttending = attendees.contains(email);
               ),
 
               const SizedBox(height: 4),
-              
+
               const Divider(height: 20, thickness: 2),
               Card(
                 shape: RoundedRectangleBorder(
@@ -142,9 +166,9 @@ isAttending = attendees.contains(email);
                     children: [
                       GoogleText(
                         event['category'] ?? "No Category",
-                        fontSize: 18,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
                       ),
                       const SizedBox(height: 12),
 
@@ -268,7 +292,7 @@ isAttending = attendees.contains(email);
                             attendeeList
                                 .map(
                                   (name) => Chip(
-                                    label: Text(name),
+                                    label: GoogleText(name),
                                     avatar: const Icon(Icons.person, size: 18),
                                     backgroundColor: Colors.amber.shade100,
                                   ),
@@ -280,10 +304,8 @@ isAttending = attendees.contains(email);
                 ),
               ),
               const SizedBox(height: 8),
-              Card(
-                
-              ),
-              const SizedBox(height: 8,),
+              Card(),
+              const SizedBox(height: 8),
               Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
@@ -300,25 +322,19 @@ isAttending = attendees.contains(email);
                         fontWeight: FontWeight.bold,
                       ),
                       const SizedBox(height: 12),
-                     
 
                       ListTile(
                         leading: const Icon(
                           Icons.person,
                           color: Colors.deepPurple,
                         ),
-                        title: GoogleText(
-                          event['meetLink'] ?? "Unknown",
-                        ),
+                        title: GoogleText(event['meetLink'] ?? "Unknown"),
                       ),
-                      
-                   
-                      
                     ],
                   ),
                 ),
               ),
-              SizedBox(height: 8,),
+              SizedBox(height: 8),
               Center(
                 child: ElevatedButton.icon(
                   onPressed: () {
@@ -341,8 +357,10 @@ isAttending = attendees.contains(email);
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    context.push('/eventlist/eventdetails/eventinvite',extra: widget.documentId);
-
+                    context.push(
+                      '/eventlist/eventdetails/eventinvite',
+                      extra: widget.documentId,
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.amber,
@@ -354,7 +372,7 @@ isAttending = attendees.contains(email);
                   ),
                 ),
               ),
-               
+
               // Join/Leave Button
 
               // Center(

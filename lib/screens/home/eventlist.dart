@@ -13,45 +13,48 @@ class EventListScreen extends StatefulWidget {
 }
 
 class _EventListScreenState extends State<EventListScreen> {
+  String userName='';
   @override
   void initState() {
     
     super.initState();
     fetchUserData();
   }
+  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 233, 221, 221),
+      backgroundColor: const Color.fromARGB(255, 118, 145, 235),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 40),
+            SizedBox(height: 35),
             Padding(
               padding: EdgeInsets.only(left: 15.0),
               child: Row(
                 children: [
+                  SizedBox(width: 10,),
                   CircleAvatar(
                     radius: 30,
                     backgroundImage: NetworkImage(
                       'https://randomuser.me/api/portraits/men/${DateTime.now().millisecondsSinceEpoch % 100}.jpg',
                     ),
                   ),
-                  SizedBox(width: 10),
+                  SizedBox(width: 20),
                   Column(
                     children: [
                       Row(
                         children: [
-                          GoogleText('Hello  '),
+                          GoogleText('Greetings  ',fontSize: 18,),
                           GoogleText(
                             userName,
-                            fontSize: 20,
+                            fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ],
                       ),
-                      GoogleText('Explore the amazing events '),
+                      GoogleText('Explore the amazing events ',fontSize: 18,),
                     ],
                   ),
                 ],

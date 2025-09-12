@@ -4,8 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eventmanagement/widgets/textwidgets.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'profilepage.dart';
-import 'dart:math';
+
 
 class Profilepicture extends StatelessWidget {
   final File? imageFile;
@@ -39,7 +38,7 @@ class Profilepicture extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Sufyan')),
+      appBar: AppBar(title: GoogleText('Sufyan')),
       body: Center(
         child:
             imageFile != null
