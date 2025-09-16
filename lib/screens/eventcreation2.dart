@@ -115,7 +115,6 @@ class _EventCreationPageState extends State<EventCreationPage> {
                 controller: _title,
                 title: "Event Name",
                 hint: "Enter event name",
-                
               ),
               _labeledField(
                 controller: _description,
@@ -123,12 +122,36 @@ class _EventCreationPageState extends State<EventCreationPage> {
                 hint: "Write a short description",
                 maxLines: 3,
               ),
-              TextButton(onPressed: _pickDate, child: GoogleText('Pick Date',color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold)),
-              TextButton(onPressed: _pickTime, child: GoogleText('Pick Time',color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold)),
-              GoogleText('Category', fontSize: 20,color: Colors.white, fontWeight: FontWeight.bold),
+              TextButton(
+                onPressed: _pickDate,
+                child: GoogleText(
+                  'Pick Date',
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              TextButton(
+                onPressed: _pickTime,
+                child: GoogleText(
+                  'Pick Time',
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              GoogleText(
+                'Category',
+                fontSize: 20,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
               DropdownButtonFormField<String>(
                 value: selectedCategory,
-                hint: const GoogleText("Select Category",color: Colors.white60,),
+                hint: const GoogleText(
+                  "Select Category",
+                  color: Colors.white60,
+                ),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -185,7 +208,8 @@ class _EventCreationPageState extends State<EventCreationPage> {
                     if (_title.text.isEmpty ||
                         _description.text.isEmpty ||
                         _selectedDate == null ||
-                        _selectedTime == null) {
+                        _selectedTime == null ||
+                        selectedCategory == null) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: GoogleText("Please fill all fields!"),
@@ -247,7 +271,6 @@ class _EventCreationPageState extends State<EventCreationPage> {
                       // small delay so user sees snackbar before navigating
                       await Future.delayed(const Duration(seconds: 1));
 
-                      context.push('/eventlist');
                     } catch (e) {
                       // ❌ Error Snackbar
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -290,14 +313,18 @@ class _EventCreationPageState extends State<EventCreationPage> {
     String? hint,
     int maxLines = 1,
     TextEditingController? controller,
-    
 
     TextInputType keyboardType = TextInputType.text,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        GoogleText(title, color: Colors.white,fontSize: 20, fontWeight: FontWeight.w800),
+        GoogleText(
+          title,
+          color: Colors.white,
+          fontSize: 20,
+          fontWeight: FontWeight.w800,
+        ),
         const SizedBox(height: 8),
         TextField(
           controller: controller,

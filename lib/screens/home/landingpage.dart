@@ -49,11 +49,12 @@ class _LandingPageState extends State<LandingPage> {
         bottomNavigationBar: Container(
           margin: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.white,
+            
+            color: const Color.fromARGB(255, 181, 195, 240),
             borderRadius: BorderRadius.circular(30),
             boxShadow: [
               BoxShadow(
-                color: Colors.black12,
+                color: Colors.white,
                 blurRadius: 10,
                 spreadRadius: 2,
                 offset: const Offset(0, 5),
@@ -66,25 +67,25 @@ class _LandingPageState extends State<LandingPage> {
             items: [
               SalomonBottomBarItem(
                 icon: const Icon(Icons.home),
-                title: const GoogleText("Home"),
+                title: const GoogleText("Home",color: Colors.white,fontWeight: FontWeight.w600,),
                 unselectedColor: Colors.amber,
                 selectedColor: Colors.amber,
               ),
               SalomonBottomBarItem(
                 icon: const Icon(Icons.create),
-                title: const GoogleText("Create Event"),
+                title: const GoogleText("Create Event",color: Colors.white,fontWeight: FontWeight.w600,),
                 unselectedColor: Colors.amber,
                 selectedColor: Colors.amber,
               ),
               SalomonBottomBarItem(
                 icon: const Icon(Icons.chat),
-                title: const GoogleText("Messages"),
+                title: const GoogleText("Messages",color: Colors.white,fontWeight: FontWeight.w600,),
                 unselectedColor: Colors.amber,
                 selectedColor: Colors.amber,
               ),
               SalomonBottomBarItem(
                 icon: const Icon(Icons.person),
-                title: const GoogleText("Profile"),
+                title: const GoogleText("Profile",color: Colors.white,fontWeight: FontWeight.w600,),
                 unselectedColor: Colors.amber,
                 selectedColor: Colors.amber,
               ),

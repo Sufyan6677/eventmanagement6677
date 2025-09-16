@@ -117,7 +117,7 @@ class _SignupaState extends State<Signupa> {
                     Expanded(child: Divider(thickness: 2)),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: GoogleText("OR"),
+                      child: GoogleText("OR",color: Colors.white,),
                     ),
                     Expanded(child: Divider(thickness: 2)),
                   ],
@@ -129,7 +129,7 @@ class _SignupaState extends State<Signupa> {
                   children: [
                     GoogleText(
                       'Email Address',
-
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
@@ -138,11 +138,11 @@ class _SignupaState extends State<Signupa> {
                       keyboardType: TextInputType.emailAddress,
                       controller: _email,
                       decoration: InputDecoration(
-                        labelText: 'Email Address',
-                        prefixIcon: const Icon(Icons.email_outlined),
+                        
+                        prefixIcon: const Icon(Icons.email_outlined,color: Colors.white,),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: BorderSide(color: Colors.white),
                         ),
                       ),
                     ),
@@ -150,7 +150,7 @@ class _SignupaState extends State<Signupa> {
                     const SizedBox(height: 10),
                     GoogleText(
                       'Password',
-
+                      color: Colors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
@@ -160,8 +160,8 @@ class _SignupaState extends State<Signupa> {
                       obscureText: true,
                       controller: _password,
                       decoration: InputDecoration(
-                        labelText: 'Password',
-                        prefixIcon: const Icon(Icons.lock_outline),
+                        
+                        prefixIcon: const Icon(Icons.lock_outline,color: Colors.white,),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -170,7 +170,7 @@ class _SignupaState extends State<Signupa> {
                     const SizedBox(height: 10),
                     GoogleText(
                       'Confirm Password',
-
+                      color: Colors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
@@ -180,8 +180,8 @@ class _SignupaState extends State<Signupa> {
                       obscureText: true,
                       controller: _confirmpassword,
                       decoration: InputDecoration(
-                        labelText: 'Confirm Password',
-                        prefixIcon: const Icon(Icons.lock_outline),
+                        
+                        prefixIcon: const Icon(Icons.lock_outline,color: Colors.white,),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -193,7 +193,7 @@ class _SignupaState extends State<Signupa> {
                 const SizedBox(height: 10),
 
                 // Forgot password
-                GoogleText('Must contain atleast 6 characters', fontSize: 16),
+                GoogleText('Must contain atleast 6 characters', fontSize: 16,color: Colors.white,fontWeight: FontWeight.w600,),
 
                 const SizedBox(height: 10),
 
@@ -205,6 +205,7 @@ class _SignupaState extends State<Signupa> {
                     textColor: Colors.white,
                     backgroundColor: Colors.amber,
                     text: 'Sign-Up',
+                    fontWeight: FontWeight.bold,
                     borderRadiusCircular: 12,
                     borderColor: Colors.white,
                     onPressed: () async {
@@ -243,6 +244,7 @@ class _SignupaState extends State<Signupa> {
                     const GoogleText(
                       "Already have an account? ",
                       fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
 
                     TextButton(
@@ -266,84 +268,4 @@ class _SignupaState extends State<Signupa> {
     );
   }
 }
-//       backgroundColor: Color(0xFF676BD0),
-//       body: Padding(
-//         padding: const EdgeInsets.all(20.0),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.stretch,
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             const SizedBox(height: 40),
-//             const Text(
-//               'SIGNUP',
-//               textAlign: TextAlign.center,
-//               style: TextStyle(
-//                 color: Colors.amber,
-//                 fontSize: 35,
-//                 fontWeight: FontWeight.bold,
-//               ),
-//             ),
-//             const SizedBox(height: 40),
 
-//             // Email TextField
-//             TextField(
-//               controller: _email,
-//               keyboardType: TextInputType.emailAddress,
-//               decoration: InputDecoration(
-//                 labelText: 'Email',
-//                 labelStyle: TextStyle(color: Colors.amber),
-
-//                 border: OutlineInputBorder(),
-//               ),
-//             ),
-//             const SizedBox(height: 20),
-
-//             // Password TextField
-//             TextField(
-//               controller: _password,
-//               obscureText: true,
-//               keyboardType: TextInputType.text,
-//               decoration: InputDecoration(
-//                 labelText: 'Password',
-//                 labelStyle: TextStyle(color: Colors.amber),
-//                 border: OutlineInputBorder(),
-//               ),
-//             ),
-//             const SizedBox(height: 30),
-//             TextField(
-//               obscureText: true,
-//               keyboardType: TextInputType.text,
-//               decoration: InputDecoration(
-//                 labelText: 'Confirm Password',
-//                 labelStyle: TextStyle(color: Colors.amber),
-//                 border: OutlineInputBorder(),
-//               ),
-//             ),
-//             const SizedBox(height: 30),
-//             // Login Button
-//             ElevatedButton(
-//               onPressed: () async {
-//                 final user = await _auth.createUserWithEmailAndPassword(
-//                   _email.text,
-//                   _password.text,
-//                 );
-//                 if (user != null) {
-//                   log('User created successfuly');
-//                   Navigator.pushNamed(context, Logina.id);
-//                 }
-//               },
-//               child: const Text(
-//                 'Signup',
-//                 style: TextStyle(
-//                   fontWeight: FontWeight.bold,
-//                   color: Colors.amber,
-//                   fontSize: 20,
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

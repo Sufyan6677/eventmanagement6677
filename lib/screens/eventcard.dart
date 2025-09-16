@@ -96,7 +96,7 @@ class EventCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 8),
-                  GoogleText(title, fontSize: 20, fontWeight: FontWeight.bold),
+                  GoogleText(title, fontSize: 20, color: Colors.white,fontWeight: FontWeight.bold),
                   const SizedBox(height: 8),
                   Row(
                     children: [
@@ -109,8 +109,7 @@ class EventCard extends StatelessWidget {
                       Expanded(
                         child: GoogleText(
                           eventlocation,
-                          fontWeight: FontWeight.bold,
-                          color: const Color.fromARGB(255, 118, 115, 115),
+                          color: Colors.white,fontWeight: FontWeight.w500,
                         ),
                       ),
                     ],
@@ -118,7 +117,7 @@ class EventCard extends StatelessWidget {
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      GoogleText('$attendeescount attending'),
+                      GoogleText('$attendeescount attending',color: Colors.white,fontWeight: FontWeight.w500,),
                       SizedBox(width: 45),
                       
                     ],

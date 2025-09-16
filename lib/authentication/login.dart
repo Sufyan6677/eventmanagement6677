@@ -47,18 +47,17 @@ class _LoginaState extends State<Logina> {
                 const Text(
                   "Welcome Back!",
                   style: TextStyle(
-                    fontSize: 28,
+                    fontSize: 35,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black87,
+                    color: Colors.white,
                   ),
                 ),
 
                 const SizedBox(height: 10),
-                const Text(
+                const GoogleText(
                   "Enter your login information",
-                  style: TextStyle(fontSize: 18, color: Colors.grey),
-                ),
-
+                  fontSize: 18, color: Colors.white70,fontWeight: FontWeight.w500,),
+                
                 const SizedBox(height: 10),
 
                 Row(
@@ -160,7 +159,7 @@ class _LoginaState extends State<Logina> {
                     Expanded(child: Divider(thickness: 2)),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: GoogleText("OR"),
+                      child: GoogleText("OR",color: Colors.white,),
                     ),
                     Expanded(child: Divider(thickness: 2)),
                   ],
@@ -175,20 +174,20 @@ class _LoginaState extends State<Logina> {
 
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
-                      color: Colors.black,
+                      color: Colors.white,
                     ),
                     SizedBox(height: 10),
                     TextField(
                       keyboardType: TextInputType.emailAddress,
                       controller: _email,
                       decoration: InputDecoration(
-                        labelText: 'Email Address',
-                        prefixIcon: const Icon(Icons.email_outlined),
+                        
+                        prefixIcon: const Icon(Icons.email_outlined,color: Colors.white,),
 
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
 
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: BorderSide(color: Colors.white),
                         ),
 
                         // Border when FOCUSED
@@ -209,7 +208,7 @@ class _LoginaState extends State<Logina> {
 
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
-                      color: Colors.black,
+                      color: Colors.white,
                     ),
                     // Password field
                     SizedBox(height: 10),
@@ -218,8 +217,8 @@ class _LoginaState extends State<Logina> {
 
                       controller: _password,
                       decoration: InputDecoration(
-                        labelText: 'Password',
-                        prefixIcon: const Icon(Icons.lock_outline),
+                        
+                        prefixIcon: const Icon(Icons.lock_outline,color: Colors.white,),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -249,6 +248,7 @@ class _LoginaState extends State<Logina> {
                     child: const GoogleText(
                       "Forgot Password?",
                       color: Colors.amber,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
@@ -301,6 +301,7 @@ class _LoginaState extends State<Logina> {
                     const GoogleText(
                       "Don't have an account? ",
                       fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
 
                     TextButton(

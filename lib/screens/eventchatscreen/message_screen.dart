@@ -26,10 +26,10 @@ class _MessageScreenState extends State<MessageScreen> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 118, 145, 235),
       appBar: AppBar(
-    backgroundColor: Colors.white,
+    backgroundColor: const Color.fromARGB(255, 118, 145, 235),
     elevation: 0,
     leading: IconButton(
-      icon: Icon(Icons.arrow_back, color: Colors.black),
+      icon: Icon(Icons.arrow_back, color: Colors.white),
       onPressed: () {
         context.pop(); // GoRouter back navigation
         // If not using GoRouter, use: Navigator.pop(context);
@@ -39,7 +39,7 @@ class _MessageScreenState extends State<MessageScreen> {
     title: GoogleText(
       "Chats",
       
-        color: Colors.black,
+        color: Colors.white,
         fontSize: 30,
         fontWeight: FontWeight.bold,
       
@@ -100,12 +100,16 @@ class _MessageScreenState extends State<MessageScreen> {
               SizedBox(height: 20),
 
               // 🔹 Group Chats Section
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: GoogleText(
-                  "Event Chats",
-                  fontSize: 23, fontWeight: FontWeight.bold),
-                
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: GoogleText(
+                    "Event Chats",
+                    color: Colors.white,
+                    
+                    fontSize: 23, fontWeight: FontWeight.bold),
+                  
+                ),
               ),
 
               StreamBuilder<QuerySnapshot>(
