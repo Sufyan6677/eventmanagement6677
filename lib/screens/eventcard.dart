@@ -5,10 +5,9 @@ class EventCard extends StatelessWidget {
   final String title;
   final String date;
   // final String description;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final String eventlocation;
   final int attendeescount;
-  
 
   const EventCard({
     super.key,
@@ -55,10 +54,11 @@ class EventCard extends StatelessWidget {
                     height: 150,
                     width: double.infinity,
                     fit: BoxFit.cover,
-                    loadingBuilder: (context, child, progress) {
-                      if (progress == null) return child;
-                      return const Center(
-                        child: CircularProgressIndicator(strokeWidth: 2),
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        height: 150,
+                        color: Colors.grey, // Placeholder in tests
+                        child: const Center(child: Icon(Icons.broken_image)),
                       );
                     },
                   ),
@@ -96,7 +96,12 @@ class EventCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 8),
-                  GoogleText(title, fontSize: 20, color: Colors.white,fontWeight: FontWeight.bold),
+                  GoogleText(
+                    title,
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                   const SizedBox(height: 8),
                   Row(
                     children: [
@@ -109,7 +114,8 @@ class EventCard extends StatelessWidget {
                       Expanded(
                         child: GoogleText(
                           eventlocation,
-                          color: Colors.white,fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ],
@@ -117,9 +123,14 @@ class EventCard extends StatelessWidget {
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      GoogleText('$attendeescount attending',color: Colors.white,fontWeight: FontWeight.w500,),
+                      Expanded(
+                        child: GoogleText(
+                          '$attendeescount attending',
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                       SizedBox(width: 45),
-                      
                     ],
                   ),
                 ],

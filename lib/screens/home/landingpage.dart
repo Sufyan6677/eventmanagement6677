@@ -4,7 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class LandingPage extends StatefulWidget {
-  final StatefulNavigationShell navigationShell;
+  // final StatefulNavigationShell navigationShell;
+  final dynamic navigationShell;
   const LandingPage({super.key, required this.navigationShell});
 
   @override

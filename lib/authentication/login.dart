@@ -178,6 +178,7 @@ class _LoginaState extends State<Logina> {
                     ),
                     SizedBox(height: 10),
                     TextField(
+                      key: Key("email-field"),
                       keyboardType: TextInputType.emailAddress,
                       controller: _email,
                       decoration: InputDecoration(
@@ -214,7 +215,7 @@ class _LoginaState extends State<Logina> {
                     SizedBox(height: 10),
                     TextField(
                       obscureText: true,
-
+                      key: Key("password-field"),
                       controller: _password,
                       decoration: InputDecoration(
                         
@@ -260,6 +261,7 @@ class _LoginaState extends State<Logina> {
                   height: 50,
                   child: CustomTextButton(
                     textSize: 18,
+                    key: Key("sign-in-button"),
                     textColor: Colors.white,
                     backgroundColor: Colors.amber,
                     text: 'Sign-in',
